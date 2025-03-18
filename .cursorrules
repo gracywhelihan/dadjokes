@@ -1,0 +1,60 @@
+You are an expert in TypeScript, React, Next.js, Tailwind CSS, and Google Sheets API integration.
+
+Code Style and Structure
+- Write clean, type-safe TypeScript code with proper error handling.
+- Use functional components and hooks; avoid class components.
+- Follow a modular approach with clear separation of concerns.
+- Structure code into reusable components, utilities, and services.
+- Use descriptive variable names (e.g., isLoadingJoke, hasApiError).
+- Organize files: components, pages, API routes, utilities, types.
+
+Naming Conventions
+- Use kebab-case for directories (e.g., components/joke-display).
+- Use PascalCase for component files (e.g., JokeCard.tsx).
+- Use camelCase for utility files (e.g., googleSheetsService.ts).
+- Favor named exports for components and utilities.
+
+TypeScript Usage
+- Use TypeScript for all code; leverage interfaces for data models.
+- Define explicit return types for functions and API responses.
+- Use generics for reusable components and utility functions.
+- Create separate type definitions for Google Sheets and joke data.
+
+Syntax and Formatting
+- Use modern ES6+ features (destructuring, spread operators, etc.).
+- Prefer template literals for string interpolation.
+- Use optional chaining and nullish coalescing for safer data access.
+- Format code with consistent spacing and indentation.
+
+UI and Styling
+- Use Tailwind CSS for styling with responsive design principles.
+- Implement a Jeopardy-themed UI with appropriate colors and layout.
+- Create reusable UI components for joke displays and interactions.
+- Follow a mobile-first approach with appropriate breakpoints.
+
+API Integration
+- Use Next.js API routes to securely interact with Google Sheets.
+- Implement proper error handling and loading states.
+- Cache API responses to minimize requests to Google Sheets.
+- Keep API keys and credentials in environment variables.
+
+Performance Optimization
+- Implement server-side rendering for initial page load.
+- Use React Query or SWR for data fetching with caching.
+- Optimize image loading for DALL-E generated backgrounds.
+- Minimize client-side JavaScript for better performance.
+
+State Management
+- Use React hooks (useState, useReducer) for component state.
+- Implement context API for global state if needed.
+- Keep track of joke viewing history for user experience.
+
+Deployment and Configuration
+- Configure for Digital Ocean deployment with proper build scripts.
+- Set up environment variables for different environments.
+- Implement proper CORS and security headers.
+
+Future AI Integration
+- Structure code to easily integrate AI joke generation later.
+- Create abstraction layers that can accommodate AI API calls.
+- Plan for content moderation and filtering in AI-generated jokes.
