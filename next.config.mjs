@@ -30,7 +30,7 @@ const nextConfig = {
         webSocketURL: {
           hostname: 'localhost',
           pathname: '/dadjokes/ws',
-          port: 3000,
+          port: 3001,
           protocol: 'ws',
         },
       };
