@@ -22,7 +22,8 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
   },
-  optimizeFonts: false,
+  output: 'standalone',
+  poweredByHeader: false,
   webpack: (config, { isServer, dev }) => {
     if (!isServer && dev) {
       config.devServer = {
@@ -36,9 +37,7 @@ const nextConfig = {
       };
     }
     return config;
-  },
-  output: 'standalone',
-  poweredByHeader: false,
+  }
 }
 
 mergeConfig(nextConfig, userConfig)
