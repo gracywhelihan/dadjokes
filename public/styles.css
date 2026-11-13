@@ -1,0 +1,253 @@
+/* ---------- Design tokens ----------
+   Every color/size lives here. Switching to the color-bar version later
+   = changing these values (and adding a couple of --accent tokens). */
+:root {
+  --ink: #000;
+  --paper: #fff;
+
+  --font: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --text: 1rem;        /* 16px body */
+  --text-sm: 0.8125rem; /* 13px labels — one step down, used sparingly */
+  --leading: 1.5;      /* 16 × 1.5 = 24px line = 3 units of the 8px grid */
+
+  --star: 14px;
+  --unit: 8px;         /* spacing grid: everything is a multiple of 8 */
+  --rule: 1px solid var(--ink);
+  --border: 2px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink); /* hard shadow, no blur — 1-bit screens couldn't blur */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: calc(var(--unit) * 4) var(--unit);
+  font: var(--text) / var(--leading) var(--font);
+  color: var(--ink);
+  /* The "desktop": a 2×2 checkerboard of 1px dots.
+     50% black coverage reads as mid-gray — that's dithering. */
+  background:
+    repeating-conic-gradient(var(--ink) 0 25%, var(--paper) 0 50%)
+    0 0 / 4px 4px;
+}
+
+/* ---------- Windows ---------- */
+.window {
+  background: var(--paper);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  padding: 0;
+}
+.window--main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.titlebar {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  align-items: stretch;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: var(--border);
+}
+.titlebar__title {
+  margin: 0;
+  font-size: var(--text);   /* hierarchy by inversion, not by size */
+  font-weight: 600;
+  text-align: center;
+  line-height: calc(var(--unit) * 5);
+  letter-spacing: 0.02em;
+}
+.titlebar__box,
+.titlebar__btn {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 1.25rem;
+}
+.titlebar__box:first-child,
+.titlebar__btn:first-child { border-right: 1px solid var(--paper); }
+.titlebar__box:last-child,
+.titlebar__btn:last-child { border-left: 1px solid var(--paper); }
+button.titlebar__btn { cursor: pointer; }
+button.titlebar__btn:hover,
+button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink); outline: none; }
+
+/* ---------- Photo strip ---------- */
+.photos {
+  display: flex;
+  gap: var(--unit);
+  padding: calc(var(--unit) * 2);
+  overflow-x: auto;
+  border-bottom: var(--rule);
+  scroll-snap-type: x mandatory;
+}
+.photo {
+  flex: 0 0 auto;
+  width: 200px;
+  aspect-ratio: 1;
+  border: var(--rule);
+  display: grid;
+  place-items: center;
+  font-size: var(--text-sm);
+  scroll-snap-align: start;
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.intro {
+  margin: 0;
+  padding: calc(var(--unit) * 2);
+  max-width: 60ch; /* comfortable reading line length */
+}
+
+/* ---------- Index table ---------- */
+.index {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;  /* columns obey the widths below instead of guessing */
+}
+/* `ch` = the width of one character. In a monospace font every character
+   is 1ch, so "5ch" means exactly 5 characters wide. */
+/* Cell padding is 2 units on each side, so each column = its characters + 4 units */
+.col-num    { width: calc(3ch + var(--unit) * 4); }
+.col-rating { width: calc(var(--star) * 5 + 8px + var(--unit) * 4); } /* 5 stars + 4 gaps + padding */
+.col-date   { width: calc(8ch + var(--unit) * 4); }
+
+.index th,
+.index td {
+  padding: var(--unit) calc(var(--unit) * 2);
+  text-align: left;
+  border-bottom: var(--rule);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* long jokes end in "…"; the window shows the full text */
+}
+.index th {
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  border-bottom: var(--border);
+}
+.index td:first-child,
+.index td:nth-child(3),
+.index td:nth-child(4) { font-variant-numeric: tabular-nums; }
+
+.index tbody tr { cursor: pointer; }
+.index tbody tr:hover,
+.index tbody tr:focus-within { background: var(--ink); color: var(--paper); }
+
+.joke-btn {
+  all: unset;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.joke-btn:focus-visible { outline: 2px dashed currentColor; outline-offset: 2px; }
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--unit);
+  padding: calc(var(--unit) * 2);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Joke window (the "text thread") ---------- */
+.window--joke {
+  width: min(480px, calc(100vw - 32px));
+  color: var(--ink);
+  font: inherit;
+}
+.window--joke::backdrop { background: transparent; } /* old Macs didn't dim the screen */
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--unit) * 2);
+  padding: calc(var(--unit) * 3);
+}
+.thread__meta,
+.thread__rating {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+.thread__rating {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: calc(var(--unit) / 2);
+}
+/* Stars: SVG, so they don't depend on the font having a ★.
+   currentColor = whatever the text color is, so they invert on row hover. */
+.stars { display: inline-flex; gap: 2px; vertical-align: middle; }
+.star {
+  width: var(--star);
+  height: var(--star);
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.star--on  { fill: currentColor; }
+.star--off { fill: none; }
+.thread__rating .stars { --star: 20px; gap: 4px; }
+
+/* Who's talking is shown by alignment + inversion: Dad = outlined, left;
+   me = solid black, right. Same idea as iMessage gray/blue, in 1-bit. */
+.bubble {
+  margin: 0;
+  padding: var(--unit) calc(var(--unit) * 2);
+  border: var(--border);
+  max-width: 85%;
+}
+.bubble--dad { align-self: flex-start; }
+.bubble--me  { align-self: flex-end; background: var(--ink); color: var(--paper); }
+.bubble--me:empty { display: none; }
+
+/* Dad's bubble + the small notes under it ("Read", "Repeat") */
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--unit) / 2);
+}
+.thread__note {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+.thread__note[hidden] { display: none; }
+.link {
+  all: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:focus-visible { outline: 2px dashed currentColor; outline-offset: 2px; }
+
+.window__footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: var(--rule);
+}
+.window__footer button {
+  flex: 1;
+  padding: var(--unit);
+  border: 0;
+  background: var(--paper);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.window__footer button + button { border-left: var(--rule); }
+.window__footer button:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.window__footer button:disabled { opacity: 0.3; cursor: default; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+  .col-date, .index th:nth-child(4), .index td:nth-child(4) { display: none; }
+  .photo { width: 140px; }
+}
