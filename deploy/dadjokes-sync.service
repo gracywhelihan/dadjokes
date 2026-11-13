@@ -1,0 +1,41 @@
+# Pulls the Google Sheet into /var/lib/dadjokes/jokes.json.
+# Triggered by dadjokes-sync.timer. Install to /etc/systemd/system/.
+#
+# Run by hand:   sudo systemctl start dadjokes-sync
+# See output:    journalctl -u dadjokes-sync -n 20
+
+[Unit]
+Description=Sync dad jokes from Google Sheets
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=dadjokes
+Group=dadjokes
+# Read by systemd as root, then passed in as env vars — the script itself can't read the file
+EnvironmentFile=/etc/dadjokes/env
+Environment=JOKES_OUTPUT=/var/lib/dadjokes/jokes.json
+ExecStart=/usr/bin/python3 /var/www/dadjokes/scripts/sync_jokes.py
+TimeoutStartSec=60
+
+# Creates /var/lib/dadjokes owned by dadjokes; 0755 so nginx can read it
+StateDirectory=dadjokes
+StateDirectoryMode=0755
+UMask=0022
+
+# Sandbox: the job can write its one folder and nothing else
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/dadjokes
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+CapabilityBoundingSet=

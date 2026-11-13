@@ -1,0 +1,16 @@
+# Runs dadjokes-sync.service every 15 minutes (systemd's version of a cron job,
+# or an n8n Schedule trigger). Install to /etc/systemd/system/, then:
+#   sudo systemctl enable --now dadjokes-sync.timer
+# Check it:   systemctl list-timers dadjokes-sync
+
+[Unit]
+Description=Sync dad jokes every 15 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=15min
+# Spread the request out a little instead of hitting Google on the exact minute
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

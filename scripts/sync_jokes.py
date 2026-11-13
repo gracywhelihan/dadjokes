@@ -23,7 +23,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUTPUT = ROOT / "public" / "jokes.json"
+# Locally: public/jokes.json. On the server, systemd sets JOKES_OUTPUT so the data
+# lives outside the code checkout (see deploy/dadjokes-sync.service).
+OUTPUT = Path(os.environ.get("JOKES_OUTPUT", ROOT / "public" / "jokes.json"))
 SHEET_RANGE = "Jokes!A2:D"  # Date | Joke | Response | rating  (row 1 is headers)
 TIMEOUT_SECONDS = 20
 
@@ -92,7 +94,7 @@ def main() -> int:
         return 1
 
     write_atomically(OUTPUT, jokes)
-    print(f"Wrote {len(jokes)} jokes to {OUTPUT.relative_to(ROOT)}")
+    print(f"Wrote {len(jokes)} jokes to {OUTPUT}")
     return 0
 
 

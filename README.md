@@ -46,6 +46,27 @@ scripts/
   sync_jokes.py    # Google Sheet -> public/jokes.json
 ```
 
+## Server (DigitalOcean droplet)
+
+| What | Where |
+|---|---|
+| Code (git clone, owned by `deploy`) | `/var/www/dadjokes` — nginx serves `public/` at `/dadjokes/` |
+| Data (written by the sync job) | `/var/lib/dadjokes/jokes.json` — nginx serves it at `/dadjokes/jokes.json` |
+| Google key (root-only, mode 600) | `/etc/dadjokes/env` |
+| Sync job | `deploy/dadjokes-sync.service` + `.timer` → `/etc/systemd/system/` |
+
+The sync job runs as its own `dadjokes` user in a systemd sandbox: it can write
+`/var/lib/dadjokes` and nothing else, and systemd hands it the key as an env var so the script
+never reads the key file itself. The nginx config lives in the portfolio repo
+(`gracy-website2.0/deploy/nginx/`).
+
+```bash
+sudo systemctl start dadjokes-sync             # sync now
+journalctl -u dadjokes-sync -n 20              # see what happened
+systemctl list-timers dadjokes-sync            # when it runs next
+sudo -u deploy git -C /var/www/dadjokes pull   # update the code
+```
+
 ## Adding photos
 
 Phone photos contain GPS location in their metadata. Before adding one, resize it and strip
