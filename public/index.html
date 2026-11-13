@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dad Jokes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="window window--main">
+    <header class="titlebar">
+      <span class="titlebar__box" aria-hidden="true"></span>
+      <h1 class="titlebar__title">Dad Jokes</h1>
+      <span class="titlebar__box" aria-hidden="true"></span>
+    </header>
+
+    <section class="photos" aria-label="Photos of Dad">
+      <!-- using one photo in every slot for now; swap in more: <img src="photos/dad-1.jpg" alt="..."> -->
+      <div class="photo"><img src="photos/dad-1.jpg" alt="Dad smiling in a vintage Hamm's Beer shirt, holding a can of Hamm's, in a green valley under a blue sky"></div>
+      <div class="photo"><img src="photos/dad-1.jpg" alt=""></div>
+      <div class="photo"><img src="photos/dad-1.jpg" alt=""></div>
+      <div class="photo"><img src="photos/dad-1.jpg" alt=""></div>
+    </section>
+
+    <p class="intro">
+      My dad texts me a joke every day. These are all of them, with what I said back.
+    </p>
+
+    <table class="index">
+      <colgroup>
+        <col class="col-num">
+        <col class="col-joke">
+        <col class="col-rating">
+        <col class="col-date">
+      </colgroup>
+      <thead>
+        <tr><th>#</th><th>Joke</th><th>Rating</th><th>Date</th></tr>
+      </thead>
+      <tbody id="jokes"></tbody>
+    </table>
+
+    <footer class="footer">
+      <span id="count"></span>
+      <span>© 2026 Gracy Whelihan</span>
+    </footer>
+  </main>
+
+  <!-- <dialog> gives us Esc-to-close, focus handling, and screen reader support for free -->
+  <dialog class="window window--joke" id="joke-window" aria-labelledby="joke-title">
+    <header class="titlebar" data-drag-handle>
+      <span class="titlebar__btn" aria-hidden="true">✓</span>
+      <h2 class="titlebar__title" id="joke-title"></h2>
+      <button class="titlebar__btn" data-action="close" aria-label="Close">×</button>
+    </header>
+    <div class="thread">
+      <p class="thread__meta" id="joke-date"></p>
+      <div class="message">
+        <p class="bubble bubble--dad" id="joke-text"></p>
+        <p class="thread__note" id="joke-read" hidden>Read</p>
+        <p class="thread__note" id="joke-repeat" hidden></p>
+      </div>
+      <p class="bubble bubble--me" id="joke-response"></p>
+      <p class="thread__rating" id="joke-rating"></p>
+    </div>
+    <footer class="window__footer">
+      <button data-action="prev">← Older</button>
+      <button data-action="next">Newer →</button>
+    </footer>
+  </dialog>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
