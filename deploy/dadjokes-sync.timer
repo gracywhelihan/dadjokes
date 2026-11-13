@@ -7,10 +7,13 @@
 Description=Sync dad jokes every 15 minutes
 
 [Timer]
-OnBootSec=1min
-OnUnitActiveSec=15min
+# Clock-based (:00, :15, :30, :45) rather than "15 min after the last run" — the relative
+# kind only counts runs the timer itself started, so it can end up with nothing scheduled
+OnCalendar=*:0/15
 # Spread the request out a little instead of hitting Google on the exact minute
 RandomizedDelaySec=60
+# If the server was off when a run was due, run once when it comes back
+Persistent=true
 
 [Install]
 WantedBy=timers.target
