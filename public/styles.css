@@ -12,6 +12,7 @@
 
   --star: 14px;
   --unit: 8px;         /* spacing grid: everything is a multiple of 8 */
+  --frame: calc(var(--unit) * 3); /* 24px of desktop around the main window */
   --rule: 1px solid var(--ink);
   --border: 2px solid var(--ink);
   --shadow: 4px 4px 0 var(--ink); /* hard shadow, no blur — 1-bit screens couldn't blur */
@@ -22,7 +23,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  padding: calc(var(--unit) * 4) var(--unit);
+  padding: var(--frame); /* equal margin on all sides, like a mat around a picture */
   font: var(--text) / var(--leading) var(--font);
   color: var(--ink);
   /* The "desktop": a 2×2 checkerboard of 1px dots.
@@ -40,7 +41,7 @@ body {
   padding: 0;
 }
 .window--main {
-  max-width: 960px;
+  max-width: 1600px; /* only stops growing on very large monitors */
   margin: 0 auto;
 }
 
@@ -248,6 +249,7 @@ button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink)
 
 /* ---------- Small screens ---------- */
 @media (max-width: 600px) {
+  :root { --frame: var(--unit); }
   .col-date, .index th:nth-child(4), .index td:nth-child(4) { display: none; }
   .photo { width: 140px; }
 }
