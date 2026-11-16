@@ -51,7 +51,7 @@
   <!-- <dialog> gives us Esc-to-close, focus handling, and screen reader support for free -->
   <dialog class="window window--joke" id="joke-window" aria-labelledby="joke-title">
     <header class="titlebar" data-drag-handle>
-      <span class="titlebar__btn" aria-hidden="true">✓</span>
+      <span aria-hidden="true"></span> <!-- empty spacer: balances the × so the title stays centered -->
       <h2 class="titlebar__title" id="joke-title"></h2>
       <button class="titlebar__btn" data-action="close" aria-label="Close">×</button>
     </header>
