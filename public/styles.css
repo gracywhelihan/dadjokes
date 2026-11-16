@@ -82,10 +82,16 @@ body {
 .titlebar__box:last-child,
 .titlebar__btn:last-child { border-left: 1px solid currentColor; }
 
-
 button.titlebar__btn { cursor: pointer; }
+/* Hover/focus: stay orange, just make the × heavier and a touch bigger.
+   Keyboard users still need to see which button is focused, so the change
+   has to be noticeable — weight alone is subtle, so size changes too. */
 button.titlebar__btn:hover,
-button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink); outline: none; }
+button.titlebar__btn:focus-visible {
+  font-weight: 600;
+  font-size: 1.5rem;
+  outline: none;
+}
 
 /* ---------- Photo strip ---------- */
 .photos {
