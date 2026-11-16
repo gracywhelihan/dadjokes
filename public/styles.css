@@ -103,7 +103,8 @@ button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink)
 .intro {
   margin: 0;
   padding: calc(var(--unit) * 2);
-  max-width: 60ch; /* comfortable reading line length */
+  max-width: 72ch; /* comfortable line length is ~45–75 characters */
+  text-wrap: pretty; /* when it does wrap (phones), avoid a lone word on the last line */
 }
 
 /* ---------- Index table ---------- */
