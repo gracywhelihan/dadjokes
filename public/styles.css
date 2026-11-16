@@ -9,6 +9,7 @@
   --accent: #d94123;
   --on-accent: var(--ink);
   --strip: var(--ink); /* background behind the photos */
+  --desktop: #649142; /* page background around the window */
 
   --font: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --text: 1rem;        /* 16px body */
@@ -31,11 +32,7 @@ body {
   padding: var(--frame); /* equal margin on all sides, like a mat around a picture */
   font: var(--text) / var(--leading) var(--font);
   color: var(--ink);
-  /* The "desktop": a 2×2 checkerboard of 1px dots.
-     50% black coverage reads as mid-gray — that's dithering. */
-  background:
-    repeating-conic-gradient(var(--ink) 0 25%, var(--paper) 0 50%)
-    0 0 / 4px 4px;
+  background: var(--desktop); /* the area around the main window */
 }
 
 /* ---------- Windows ---------- */
