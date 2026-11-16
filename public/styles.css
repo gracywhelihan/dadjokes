@@ -54,8 +54,8 @@ body {
   display: grid;
   grid-template-columns: 2.5rem 1fr 2.5rem;
   align-items: stretch;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent); /* every window's title bar uses the accent */
+  color: var(--on-accent);
   border-bottom: var(--border);
 }
 .titlebar__title {
@@ -82,8 +82,7 @@ body {
 .titlebar__box:last-child,
 .titlebar__btn:last-child { border-left: 1px solid currentColor; }
 
-/* The main window's title bar gets the accent; the joke window stays black */
-.window--main > .titlebar { background: var(--accent); color: var(--on-accent); }
+
 button.titlebar__btn { cursor: pointer; }
 button.titlebar__btn:hover,
 button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink); outline: none; }
