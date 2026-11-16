@@ -4,6 +4,11 @@
 :root {
   --ink: #000;
   --paper: #fff;
+  /* One accent color, sampled from the Cargo reference. Black text on it = 4.73:1
+     contrast (passes WCAG AA); white would be 4.44:1 (just fails). */
+  --accent: #d94123;
+  --on-accent: var(--ink);
+  --strip: var(--ink); /* background behind the photos */
 
   --font: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --text: 1rem;        /* 16px body */
@@ -71,16 +76,21 @@ body {
   font: inherit;
   font-size: 1.25rem;
 }
+/* currentColor = the bar's text color, so dividers match whatever the bar's colors are */
 .titlebar__box:first-child,
-.titlebar__btn:first-child { border-right: 1px solid var(--paper); }
+.titlebar__btn:first-child { border-right: 1px solid currentColor; }
 .titlebar__box:last-child,
-.titlebar__btn:last-child { border-left: 1px solid var(--paper); }
+.titlebar__btn:last-child { border-left: 1px solid currentColor; }
+
+/* The main window's title bar gets the accent; the joke window stays black */
+.window--main > .titlebar { background: var(--accent); color: var(--on-accent); }
 button.titlebar__btn { cursor: pointer; }
 button.titlebar__btn:hover,
 button.titlebar__btn:focus-visible { background: var(--paper); color: var(--ink); outline: none; }
 
 /* ---------- Photo strip ---------- */
 .photos {
+  background: var(--strip);
   display: flex;
   gap: var(--unit);
   padding: calc(var(--unit) * 2);
