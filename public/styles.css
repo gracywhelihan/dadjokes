@@ -10,6 +10,7 @@
   --on-accent: var(--ink);
   --strip: var(--ink); /* background behind the photos */
   --desktop: #649142; /* page background around the window */
+  --highlight: #f9d704; /* intro band; black text on it = 14.7:1 */
 
   --font: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --text: 1rem;        /* 16px body */
@@ -112,9 +113,14 @@ button.titlebar__btn:focus-visible {
 }
 .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* Full-width colored band; the text inside keeps a readable line length */
 .intro {
-  margin: 0;
+  background: var(--highlight);
   padding: calc(var(--unit) * 2);
+  border-bottom: var(--rule);
+}
+.intro p {
+  margin: 0;
   max-width: 72ch; /* comfortable line length is ~45–75 characters */
   text-wrap: pretty; /* when it does wrap (phones), avoid a lone word on the last line */
 }
