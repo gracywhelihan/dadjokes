@@ -64,7 +64,6 @@ body {
   line-height: calc(var(--unit) * 5);
   letter-spacing: 0.02em;
 }
-.titlebar__box,
 .titlebar__btn {
   display: grid;
   place-items: center;
@@ -75,9 +74,7 @@ body {
   font-size: 1.25rem;
 }
 /* currentColor = the bar's text color, so dividers match whatever the bar's colors are */
-.titlebar__box:first-child,
 .titlebar__btn:first-child { border-right: 1px solid currentColor; }
-.titlebar__box:last-child,
 .titlebar__btn:last-child { border-left: 1px solid currentColor; }
 
 button.titlebar__btn { cursor: pointer; }
