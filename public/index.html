@@ -12,9 +12,9 @@
 <body>
   <main class="window window--main">
     <header class="titlebar">
-      <span class="titlebar__box" aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
       <h1 class="titlebar__title">Dad Jokes</h1>
-      <span class="titlebar__box" aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
     </header>
 
     <section class="photos" aria-label="Photos of Dad">
@@ -25,9 +25,10 @@
       <div class="photo"><img src="photos/dad-1.jpg" alt=""></div>
     </section>
 
-    <p class="intro">
-      My dad texts me a joke every day. These are all of them, with what I said back.
-    </p>
+    <!-- the band (full width, colored) and the text (limited line length) are separate on purpose -->
+    <div class="intro">
+      <p>My dad texts me jokes. These are all of the jokes he has texted me.</p>
+    </div>
 
     <table class="index">
       <colgroup>
@@ -51,7 +52,7 @@
   <!-- <dialog> gives us Esc-to-close, focus handling, and screen reader support for free -->
   <dialog class="window window--joke" id="joke-window" aria-labelledby="joke-title">
     <header class="titlebar" data-drag-handle>
-      <span class="titlebar__btn" aria-hidden="true">✓</span>
+      <span aria-hidden="true"></span> <!-- empty spacer: balances the × so the title stays centered -->
       <h2 class="titlebar__title" id="joke-title"></h2>
       <button class="titlebar__btn" data-action="close" aria-label="Close">×</button>
     </header>
@@ -66,8 +67,8 @@
       <p class="thread__rating" id="joke-rating"></p>
     </div>
     <footer class="window__footer">
-      <button data-action="prev">← Older</button>
-      <button data-action="next">Newer →</button>
+      <button data-action="newer">← Newer</button>
+      <button data-action="older">Older →</button>
     </footer>
   </dialog>
 

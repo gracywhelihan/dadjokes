@@ -136,11 +136,19 @@ function openJoke(i) {
       <button class="link" data-action="goto" data-num="${j.repeatOf.num}">#${j.repeatOf.num}</button>`;
   }
   dialog.querySelector("#joke-rating").innerHTML = stars(j.rating);
-  // newest is index 0, so "older" = higher index
-  dialog.querySelector('[data-action="prev"]').disabled = i === jokes.length - 1;
-  dialog.querySelector('[data-action="next"]').disabled = i === 0;
+  dialog.querySelector('[data-action="newer"]').disabled = i === 0;
+  dialog.querySelector('[data-action="older"]').disabled = i === jokes.length - 1;
   history.replaceState(null, "", `#${j.num}`); // shareable link to this joke
   if (!dialog.open) dialog.showModal();
+}
+
+// The list is newest-first (index 0 = newest), so moving through it like reading
+// down the table means going right = older = higher index.
+function showNewer() {
+  if (current > 0) openJoke(current - 1);
+}
+function showOlder() {
+  if (current < jokes.length - 1) openJoke(current + 1);
 }
 
 dialog.addEventListener("close", () => history.replaceState(null, "", location.pathname));
@@ -156,14 +164,15 @@ dialog.addEventListener("click", (e) => {
     const num = Number(e.target.closest("[data-num]").dataset.num);
     openJoke(jokes.findIndex((j) => j.num === num));
   }
-  if (action === "prev" && current < jokes.length - 1) openJoke(current + 1);
-  if (action === "next" && current > 0) openJoke(current - 1);
+  if (action === "newer") showNewer();
+  if (action === "older") showOlder();
 });
 
 document.addEventListener("keydown", (e) => {
   if (!dialog.open) return;
-  if (e.key === "ArrowLeft" && current < jokes.length - 1) openJoke(current + 1);
-  if (e.key === "ArrowRight" && current > 0) openJoke(current - 1);
+  // Same direction as the buttons: left = newer, right = older
+  if (e.key === "ArrowLeft") showNewer();
+  if (e.key === "ArrowRight") showOlder();
 });
 
 // ---------- Drag the window by its title bar ----------
