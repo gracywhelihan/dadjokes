@@ -52,7 +52,7 @@ body {
   display: grid;
   grid-template-columns: 2.5rem 1fr 2.5rem;
   align-items: stretch;
-  background: var(--accent); /* every window's title bar uses the accent */
+  background: var(--accent); /* main title bar = accent; joke window overrides below */
   color: var(--on-accent);
   border-bottom: var(--border);
 }
@@ -76,6 +76,9 @@ body {
 /* currentColor = the bar's text color, so dividers match whatever the bar's colors are */
 .titlebar__btn:first-child { border-right: 1px solid currentColor; }
 .titlebar__btn:last-child { border-left: 1px solid currentColor; }
+
+/* The joke window's title bar stays black so the pop-up reads as its own layer */
+.window--joke > .titlebar { background: var(--ink); color: var(--paper); }
 
 button.titlebar__btn { cursor: pointer; }
 /* Hover/focus: stay orange, just make the × heavier and a touch bigger.
