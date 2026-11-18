@@ -1,0 +1,37 @@
+name: Deploy to DigitalOcean
+
+# This repo is public. That's fine: only pushes to main (which only the owner can do)
+# trigger this, and GitHub never exposes repo secrets to pull requests from forks.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # adds a "Run workflow" button in the Actions tab
+
+# Never run two deploys at once
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+# This job only needs SSH, not the GitHub token
+permissions: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Deploy over SSH
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Pin the server's identity so a man-in-the-middle can't pose as it
+          echo "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # The server ignores what we ask to run; this key can only trigger deploy-site
+          ssh -T -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$DEPLOY_USER@$DEPLOY_HOST"

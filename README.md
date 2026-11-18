@@ -64,8 +64,21 @@ never reads the key file itself. The nginx config lives in the portfolio repo
 sudo systemctl start dadjokes-sync             # sync now
 journalctl -u dadjokes-sync -n 20              # see what happened
 systemctl list-timers dadjokes-sync            # when it runs next
-sudo -u deploy git -C /var/www/dadjokes pull   # update the code
 ```
+
+### Deploying
+
+Pushing to `main` deploys automatically (`.github/workflows/deploy.yml`): GitHub Actions SSHes
+in as `deploy` with a key that's locked to one command, `/usr/local/bin/deploy-dadjokes`
+(source: `deploy/deploy-dadjokes.sh`), which resets `/var/www/dadjokes` to `origin/main`.
+You can also run it from the **Actions** tab → *Deploy to DigitalOcean* → *Run workflow*.
+
+Repo secrets (Settings → Secrets and variables → Actions): `DEPLOY_HOST`, `DEPLOY_USER`
+(`deploy`), `DEPLOY_KEY` (this repo's own key — not shared with the portfolio), and
+`DEPLOY_KNOWN_HOSTS` (the server's SSH host key line).
+
+Changes to the systemd files in `deploy/` aren't auto-deployed (the deploy user has no sudo);
+install those by hand.
 
 ## Adding photos
 
