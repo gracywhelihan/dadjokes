@@ -77,9 +77,8 @@ body {
 .titlebar__btn:first-child { border-right: 1px solid currentColor; }
 .titlebar__btn:last-child { border-left: 1px solid currentColor; }
 
-/* The joke window's title bar is white with black text, so the window stays
-   visible when it opens over the black photo strip (a black bar disappeared there) */
-.window--joke > .titlebar { background: var(--paper); color: var(--ink); }
+/* The joke window's title bar stays black so the pop-up reads as its own layer */
+.window--joke > .titlebar { background: var(--ink); color: var(--paper); }
 
 button.titlebar__btn { cursor: pointer; }
 /* Hover/focus: stay orange, just make the × heavier and a touch bigger.
